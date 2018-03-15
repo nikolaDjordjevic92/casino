@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>		
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+	<script>
+		var app = angular.module("myApp",[]);
+		app.controller("myCtrl", function($scope){
+			$scope.myFunc=function(){
+			    $.get("/rest", function(data, status){
+					if(status===("success")){
+						var response=JSON.parse(JSON.stringify(data));
+						$scope.welcome = response.welcome;
+						$scope.date = response.dateString;
+					}
+				})
+		 	};
+		});
+	</script>
+		
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body data-ng-app="myApp" data-ng-controller="myCtrl">
+		<div>
+			<h1 data-th-text="${message.welcome}"></h1>
+			<h2 data-th-text="${name}"></h2>
+			<button id="ajaxPoziv" ng-click="myFunc()">Poziv</button>
+			<p>{{welcome}}</p>
+			<p>{{date}}</p>
+		</div>
+	</body>
+</html>

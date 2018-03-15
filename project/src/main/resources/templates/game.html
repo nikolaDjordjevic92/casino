@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>		
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<style>
+	FORM{
+		text-align: right;
+	}
+	
+	FORM .btn-submit{
+		margin: 30px 50px;
+	}
+	
+	.container {
+		text-align: center;
+	}
+	
+	.button-red {
+		border-color: red;
+	}
+	.button-yellow {
+		border-color: yellow;
+	}
+	.button-blue {
+		border-color: blue;
+	}
+	.button-orange {
+		border-color: orange;
+	}
+	.button-green {
+		border-color: green;
+	}
+	.button-black {
+		border-color: black;
+	}
+	.button-purple {
+		border-color: purple;
+	}
+	button,button:focus {
+		font-size: 20px;
+		min-height: 70px;
+		min-width: 70px;
+		border-radius: 50px;
+		margin: 15px 45px;
+		outline: 0px;
+		border-width: 13px;
+		background-color: white;
+	}
+	
+	.button-clicked,button:focus{
+		 box-shadow:
+        inset 0 0 50px #fff,      /* inner white */
+        inset 20px 0 80px #f0f,   /* inner left magenta short */
+        inset -20px 0 80px #0ff,  /* inner right cyan short */
+        inset 20px 0 300px #f0f,  /* inner left magenta broad */
+        inset -20px 0 300px #0ff, /* inner right cyan broad */
+        0 0 50px #fff,            /* outer white */
+        0px 0 20px #f0f,        /* outer left magenta */
+        10px 0 80px #0ff;     
+	}
+</style>
+<meta charset="ISO-8859-1">
+<title>Game</title>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+	<div class="container">
+		<h1>New game</h1>
+		<div class="row">
+			<button class="myBtn"   ng-click="pushNumber(n)" ng-repeat="n in numbers" value="{{n}}"  ng-show="n<8">
+				{{n}}
+			</button>
+		</div>
+		<div class="row">
+			<button class="myBtn"   ng-click="pushNumber(n)" ng-repeat="n in numbers" value="{{n}}"  ng-show="n>7 && n<15">
+				{{n}}
+			</button>
+		</div>
+		<div class="row">
+			<button class="myBtn"   ng-click="pushNumber(n)" ng-repeat="n in numbers" value="{{n}}"  ng-show="n>14 && n<22">
+				{{n}}
+			</button>
+		</div>
+		<div class="row">
+			<button class="myBtn"   ng-click="pushNumber(n)" ng-repeat="n in numbers" value="{{n}}"  ng-show="n>21 && n<29">
+				{{n}}
+			</button>
+		</div>
+		<div class="row">
+			<button class="myBtn"   ng-click="pushNumber(n)" ng-repeat="n in numbers" value="{{n}}"  ng-show="n>28 && n<36">
+				{{n}}
+			</button>
+		</div>
+		<div class="row">
+			<button class="myBtn"   ng-click="pushNumber(n)" ng-repeat="n in numbers" value="{{n}}"  ng-show="n>35 && n<43">
+				{{n}}
+			</button>
+		</div>
+		<div class="row">
+		
+			<button class="myBtn" type="button"  ng-click="pushNumber(n)" ng-repeat="n in numbers" value="{{n}}"  ng-show="n>42">
+				{{n}}
+			</button>
+		</div>
+		
+		<form ng-submit="submit()">
+			<input type="submit" class="btn btn-primary btn-submit" value="Submit"/>
+		</form>
+		
+	</div>
+</body>
+<script>
+	var app = angular.module("myApp",[]);
+	app.controller("myCtrl", function($scope,$http,$window){
+		$scope.numbers=[];
+		$scope.array=[];
+		
+		
+		$scope.submit = function(){
+			$http({
+		        method : "POST",
+		        url : "/game-ready",
+		        data: $scope.array
+		    }).then(function mySuccess(response) {
+		        $window.location.href = '/rumble';
+		    }, function myError(response) {
+		        $scope.myWelcome = response.statusText;
+		    });
+		}
+		
+		$http.get("/game-numbers")
+	    .then(function(response) {
+	        $scope.numbers = response.data;
+	        $(document).ready(function(){
+	        	
+		       
+		        for(var x=0;x<$scope.numbers.length;x++){
+			        switch($scope.numbers[x] % 7){
+				        case 0:
+				        	$scope.val = $scope.numbers[x];
+				        	$("button[value="+$scope.val+"]").addClass("button-purple");
+				        	break;
+				        case 1:
+				        	$scope.val = $scope.numbers[x];
+				        	$("button[value="+$scope.val+"]").addClass("button-red");
+				        	break;
+				        case 2:
+				        	$scope.val = $scope.numbers[x];
+				        	$("button[value="+$scope.val+"]").addClass("button-yellow");
+				        	break;
+				        case 3:
+				        	$scope.val = $scope.numbers[x];
+				        	$("button[value="+$scope.val+"]").addClass("button-blue");
+				        	break;
+				        case 4:
+				        	$scope.val = $scope.numbers[x];
+				        	$("button[value="+$scope.val+"]").addClass("button-orange");
+				        	break;
+				        case 5:
+				        	$scope.val = $scope.numbers[x];
+				        	$("button[value="+$scope.val+"]").addClass("button-green");
+				        	break;
+				        case 6:
+				        	$scope.val = $scope.numbers[x];
+				        	$("button[value="+$scope.val+"]").addClass("button-black");
+				        	break;
+			        }
+				}
+	        });
+	    });
+		
+		$scope.pushNumber=function(btnId){
+			$scope.array.push(btnId);
+			$("button[value="+btnId+"]").addClass("button-clicked");
+			if($scope.array.length>5){
+				$('.myBtn').attr('disabled', 'disabled');
+			}
+		}
+		
+		
+	});
+	
+</script>
+</html>

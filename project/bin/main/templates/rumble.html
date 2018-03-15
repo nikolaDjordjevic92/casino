@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>		
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<style>
+	
+	.container {
+		max-width: 1600px;
+	}
+
+	.rumble-numbers {
+		min-height: 700px;
+	}
+
+	.rumble-numbers-mid {
+	}
+	
+	#first-five-numbers .row
+	#drawers .row {
+		text-align:center;
+	}
+	
+	#first-five-numbers .row button{
+		margin:15px 15px;
+	}
+	
+	#drawers .row button {
+		margin: 10px 15px;
+	}
+	
+	#drawers {
+		min-height: 200px;
+	}
+	#pickers {
+		min-height: 483px;
+	}
+	
+	FORM{
+		text-align: right;
+	}
+	
+	FORM .btn-submit{
+		margin: 30px 50px;
+	}
+	
+	.container {
+		text-align: center;
+	}
+	
+	.button-red {
+		border-color: red;
+	}
+	.button-yellow {
+		border-color: yellow;
+	}
+	.button-blue {
+		border-color: blue;
+	}
+	.button-orange {
+		border-color: orange;
+	}
+	.button-green {
+		border-color: green;
+	}
+	.button-black {
+		border-color: black;
+	}
+	.button-purple {
+		border-color: purple;
+	}
+	button,button:focus {
+		font-size: 20px;
+		min-height: 70px;
+		min-width: 70px;
+		border-radius: 50px;
+		margin: 15px 45px;
+		outline: 0px;
+		border-width: 13px;
+		background-color: white;
+	}
+	
+	.button-clicked,button:focus{
+		 box-shadow:
+        inset 0 0 50px #fff,      /* inner white */
+        inset 20px 0 80px #f0f,   /* inner left magenta short */
+        inset -20px 0 80px #0ff,  /* inner right cyan short */
+        inset 20px 0 300px #f0f,  /* inner left magenta broad */
+        inset -20px 0 300px #0ff, /* inner right cyan broad */
+        0 0 50px #fff,            /* outer white */
+        0px 0 20px #f0f,        /* outer left magenta */
+        10px 0 80px #0ff;     
+	}
+	
+	/* RUMBLE PAGE */
+	.prizeLabel {
+		font-size: 40px;
+		margin: 20px 10px;
+	}
+	
+	.prizeLabel-right {
+		font-size: 40px;
+		margin: 20px 31px;
+	}
+	
+	.label-midprize {
+		font-size: 25px;
+		margin: 27px 35px;
+	}
+	
+	#my-numbers {
+		text-align: center;
+		margin-top: 35px;
+	}
+	
+	#my-numbers button {
+		margin: 15px 5px;
+	}
+	
+	.right-6-div {
+		text-align: right;
+	}
+	
+	.left-column-numbers button,
+	.right-column-numbers button{
+		margin: 15px 11px 15px 115px;
+	}
+	
+</style>
+<meta charset="ISO-8859-1">
+<title>Game</title>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 left-column-numbers">
+				<div class="row">
+					<div class="col-lg-6">
+						<button id="ball{{x}}" value="ball{{x}}"  ng-repeat="x in range(6,14)">
+						</button>
+					</div>
+					<div class="col-lg-6">
+						<label class="prizeLabel">
+							10.000
+						</label>
+						<label class="prizeLabel">
+							7.500
+						</label>
+						<label class="prizeLabel">
+							5.000
+						</label>
+						<label class="prizeLabel">
+							2.500
+						</label>
+						<label class="prizeLabel">
+							1.000
+						</label>
+						<label class="prizeLabel">
+							500
+						</label>
+						<label class="prizeLabel">
+							300
+						</label>
+						<label class="prizeLabel">
+							200
+						</label>
+						<label class="prizeLabel">
+							150
+						</label>
+					</div>
+				</div>
+				
+			</div>	
+			<div id="first-five-numbers" class="col-lg-4">
+				<div  class="col-lg-12">
+					<h3>First five numbers:</h3>
+					<div class="row">
+						<button id="ball{{x}}" value="ball{{x}}"  ng-repeat="x in range(1,5)">
+						</button>
+					</div>
+				</div>
+				<div  id="pickers" class="col-lg-12">
+					<div class="row">
+						<div  class="col-lg-6">
+						
+						</div>
+						<div  class="col-lg-6">
+						
+						</div>
+					</div>
+				</div>
+				<div  id="drawers" class="col-lg-12">
+					<div class="row">
+						<div  class="col-lg-3 rumble-numbers-mid">
+							<div class="row">
+								<div class="col-lg-6">
+									<button id="ball{{x}}" value="ball{{x}}"  ng-repeat="x in range(15,17)">
+									</button>
+								</div>
+								<div class="col-lg-6">
+									<label class="label-midprize">
+										100
+									</label>
+									<label class="label-midprize">
+										90
+									</label>
+									<label class="label-midprize">
+										80
+									</label>
+								</div>
+							</div>
+						</div>
+						<div  class="col-lg-3 rumble-numbers-mid">
+							<div class="row">
+								<div class="col-lg-6">
+									<button id="ball{{x}}" value="ball{{x}}"  ng-repeat="x in range(18,20)">
+									</button>
+								</div>
+								<div class="col-lg-6">
+									<label class="label-midprize">
+										70
+									</label>
+									<label class="label-midprize">
+										60
+									</label>
+									<label class="label-midprize">
+										50
+									</label>
+								</div>
+							</div>
+						</div>
+						<div  class="col-lg-3 rumble-numbers-mid">
+							<div class="row">
+								<div class="col-lg-6">
+									<button id="ball{{x}}" value="ball{{x}}"  ng-repeat="x in range(21,23)">
+									</button>
+								</div>
+								<div class="col-lg-6">
+									<label class="label-midprize">
+										40
+									</label>
+									<label class="label-midprize">
+										30
+									</label>
+									<label class="label-midprize">
+										25
+									</label>
+								</div>
+							</div>
+							
+						</div>
+						<div  class="col-lg-3 rumble-numbers-mid">
+							<div class="row">
+								<div class="col-lg-6">
+									<button id="ball{{x}}" value="ball{{x}}"  ng-repeat="x in range(24,26)">
+									</button>
+								</div>
+								<div class="col-lg-6">
+									<label class="label-midprize">
+										20
+									</label>
+									<label class="label-midprize">
+										15
+									</label>
+									<label class="label-midprize">
+										10
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 right-column-numbers">
+				<div class="row">
+					<div class="col-lg-6 right-6-div">
+						<button id="ball{{x}}" value="ball{{x}}"  ng-repeat="x in range(27,35)">
+						</button>
+					</div>
+					<div class="col-lg-6">
+						<label class="prizeLabel-right">
+							9
+						</label>
+						<label class="prizeLabel-right">
+							8
+						</label>
+						<label class="prizeLabel-right">
+							7
+						</label>
+						<label class="prizeLabel-right">
+							6
+						</label>
+						<label class="prizeLabel-right">
+							5
+						</label>
+						<label class="prizeLabel-right">
+							4
+						</label>
+						<label class="prizeLabel-right">
+							3
+						</label>
+						<label class="prizeLabel-right">
+							2
+						</label>
+						<label class="prizeLabel-right">
+							1
+						</label>
+					</div>
+				</div>
+				
+			</div>
+			<div id="my-numbers" class="col-lg-2">
+				<h3>My numbers:</h3>
+				<div class="col-lg-12">
+					<button id="myBalls{{x}}" value="{{x}}" ng-repeat="x in combinationArray">
+						{{x}}
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var app = angular.module("myApp",[]);
+		app.controller("myCtrl", function($scope,$http,$window){
+			$scope.numbers=[];
+			$scope.array=[];
+			$scope.combinationArray=[];
+			$scope.counter=0;
+			$scope.newBall=0;
+			$scope.refreshIntervalId;
+			
+			$scope.getBallsOn7sec = function(){
+				$http.get("/getRandomNumber/"+$scope.counter).then(function(response){
+					$scope.newBall=JSON.stringify(response.data);
+					$("#ball"+$scope.counter).append($scope.newBall);
+				})   
+				$scope.counter++;
+				$scope.paintBallsById($scope.newBall,"ball");
+				
+				for(var j=0;j<$scope.combinationArray.length;j++){
+					if($scope.combinationArray[j]=$scope.newBall){
+						$scope.paintBallsById($scope.newBall,"myBall");
+					}
+				}
+				
+				stopInterval();
+			}
+			
+			$(document).ready(function(){
+				$scope.refreshIntervalId = setInterval($scope.getBallsOn7sec,10000);
+				
+			});
+			
+			function stopInterval(){
+				if($scope.counter>34){
+					clearInterval($scope.refreshIntervalId);
+				}
+			}
+			
+			$http.get("/getCombinationNumbers").then(function(response){
+				$scope.combinationArray = response.data;
+			})
+			
+			$scope.paintBalls = function(){
+				 $(document).ready(function(){
+			        for(var x=0;x<$scope.numbers.length;x++){
+				        switch($scope.numbers[x] % 7){
+					        case 0:
+					        	$scope.val = $scope.numbers[x];
+					        	$("button[value="+$scope.val+"]").addClass("button-purple");
+					        	break;
+					        case 1:
+					        	$scope.val = $scope.numbers[x];
+					        	$("button[value="+$scope.val+"]").addClass("button-red");
+					        	break;
+					        case 2:
+					        	$scope.val = $scope.numbers[x];
+					        	$("button[value="+$scope.val+"]").addClass("button-yellow");
+					        	break;
+					        case 3:
+					        	$scope.val = $scope.numbers[x];
+					        	$("button[value="+$scope.val+"]").addClass("button-blue");
+					        	break;
+					        case 4:
+					        	$scope.val = $scope.numbers[x];
+					        	$("button[value="+$scope.val+"]").addClass("button-orange");
+					        	break;
+					        case 5:
+					        	$scope.val = $scope.numbers[x];
+					        	$("button[value="+$scope.val+"]").addClass("button-green");
+					        	break;
+					        case 6:
+					        	$scope.val = $scope.numbers[x];
+					        	$("button[value="+$scope.val+"]").addClass("button-black");
+					        	break;
+					        }
+						}
+			        });
+			}
+			
+			$scope.paintBallsById = function($newBall,$marker){
+				 $(document).ready(function(){
+					 if($newBall!=0){
+				        switch($newBall % 7){
+					        case 0:
+					        	$("button[id="+$marker+$scope.counter+"]").addClass("button-purple");
+					        	break;
+					        case 1:
+					        	$("button[id="+$marker+$scope.counter+"]").addClass("button-red");
+					        	break;
+					        case 2:
+					        	$("button[id="+$marker+$scope.counter+"]").addClass("button-yellow");
+					        	break;
+					        case 3:
+					        	$("button[id="+$marker+$scope.counter+"]").addClass("button-blue");
+					        	break;
+					        case 4:
+					        	$("button[id="+$marker+$scope.counter+"]").addClass("button-orange");
+					        	break;
+					        case 5:
+					        	$("button[id="+$marker+$scope.counter+"]").addClass("button-green");
+					        	break;
+					        case 6:
+					        	$("button[id="+$marker+$scope.counter+"]").addClass("button-black");
+					        	break;
+				        }
+					 }
+			        });
+			}
+			
+			$scope.range = function(min, max, step) {
+			    step = step || 1;
+			    var input = [];
+			    for (var i = min; i <= max; i += step) {
+			        input.push(i);
+			    }
+			    return input;
+			};
+			
+		});
+		
+	</script>
+</body>
+</html>

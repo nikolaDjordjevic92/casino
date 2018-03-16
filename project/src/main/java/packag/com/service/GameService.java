@@ -12,8 +12,8 @@ public class GameService {
 	@Autowired
 	private GameRepository gameRepository;
 	
-	public Iterable<Combination> getCombination() {
-		return gameRepository.findAll();
+	public Combination getCombination(int user_id) {
+		return gameRepository.findTopById(user_id);
 	}
 	
 	public void saveCombination(Combination combination) {

@@ -130,7 +130,7 @@
 	
 </style>
 <meta charset="ISO-8859-1">
-<title>Game</title>
+<title>Rumble</title>
 </head>
 <body ng-app="myApp" ng-controller="myCtrl">
 	<div class="container">
@@ -138,7 +138,7 @@
 			<div class="col-lg-3 left-column-numbers">
 				<div class="row">
 					<div class="col-lg-6">
-						<button id="ball{{x}}" value="ball{{x}}"  ng-repeat="x in range(6,14)">
+						<button id="ball{{x}}" value="{{x}}"  ng-repeat="x in range(6,14)">
 						</button>
 					</div>
 					<div class="col-lg-6">
@@ -177,7 +177,7 @@
 				<div  class="col-lg-12">
 					<h3>First five numbers:</h3>
 					<div class="row">
-						<button id="ball{{x}}" value="ball{{x}}"  ng-repeat="x in range(1,5)">
+						<button id="ball{{j}}" value="{{j}}"  ng-repeat="j in range(1,5)">
 						</button>
 					</div>
 				</div>
@@ -196,7 +196,7 @@
 						<div  class="col-lg-3 rumble-numbers-mid">
 							<div class="row">
 								<div class="col-lg-6">
-									<button id="ball{{x}}" value="ball{{x}}"  ng-repeat="x in range(15,17)">
+									<button id="ball{{jj}}" value="{{jj}}"  ng-repeat="jj in range(15,17)">
 									</button>
 								</div>
 								<div class="col-lg-6">
@@ -215,7 +215,7 @@
 						<div  class="col-lg-3 rumble-numbers-mid">
 							<div class="row">
 								<div class="col-lg-6">
-									<button id="ball{{x}}" value="ball{{x}}"  ng-repeat="x in range(18,20)">
+									<button id="ball{{jjj}}" value="{{jjj}}"  ng-repeat="jjj in range(18,20)">
 									</button>
 								</div>
 								<div class="col-lg-6">
@@ -234,7 +234,7 @@
 						<div  class="col-lg-3 rumble-numbers-mid">
 							<div class="row">
 								<div class="col-lg-6">
-									<button id="ball{{x}}" value="ball{{x}}"  ng-repeat="x in range(21,23)">
+									<button id="ball{{jjjj}}" value="{{jjjj}}"  ng-repeat="jjjj in range(21,23)">
 									</button>
 								</div>
 								<div class="col-lg-6">
@@ -254,7 +254,7 @@
 						<div  class="col-lg-3 rumble-numbers-mid">
 							<div class="row">
 								<div class="col-lg-6">
-									<button id="ball{{x}}" value="ball{{x}}"  ng-repeat="x in range(24,26)">
+									<button id="ball{{jjjjj}}" value="{{jjjjj}}"  ng-repeat="jjjjj in range(24,26)">
 									</button>
 								</div>
 								<div class="col-lg-6">
@@ -276,7 +276,7 @@
 			<div class="col-lg-3 right-column-numbers">
 				<div class="row">
 					<div class="col-lg-6 right-6-div">
-						<button id="ball{{x}}" value="ball{{x}}"  ng-repeat="x in range(27,35)">
+						<button id="ball{{ii}}" value="{{ii}}"  ng-repeat="ii in range(27,35)">
 						</button>
 					</div>
 					<div class="col-lg-6">
@@ -335,21 +335,22 @@
 				$http.get("/getRandomNumber/"+$scope.counter).then(function(response){
 					$scope.newBall=JSON.stringify(response.data);
 					$("#ball"+$scope.counter).append($scope.newBall);
-				})   
-				$scope.counter++;
-				$scope.paintBallsById($scope.newBall,"ball");
-				
-				for(var j=0;j<$scope.combinationArray.length;j++){
-					if($scope.combinationArray[j]=$scope.newBall){
-						$scope.paintBallsById($scope.newBall,"myBall");
+					$scope.paintBallsById($scope.newBall,"ball",$scope.counter);
+					$scope.counter++;
+
+					for(var j=0;j<$scope.combinationArray.length;j++){
+						if($scope.combinationArray[j]==$scope.newBall){
+							$scope.paintBallsById($scope.newBall,"myBalls",$scope.newBall);
+						}
 					}
-				}
+				})   
+				
 				
 				stopInterval();
 			}
 			
 			$(document).ready(function(){
-				$scope.refreshIntervalId = setInterval($scope.getBallsOn7sec,10000);
+				$scope.refreshIntervalId = setInterval($scope.getBallsOn7sec,1500);
 				
 			});
 			
@@ -363,67 +364,31 @@
 				$scope.combinationArray = response.data;
 			})
 			
-			$scope.paintBalls = function(){
+			$scope.paintBallsById = function($newBall,$marker,$id){
 				 $(document).ready(function(){
-			        for(var x=0;x<$scope.numbers.length;x++){
-				        switch($scope.numbers[x] % 7){
-					        case 0:
-					        	$scope.val = $scope.numbers[x];
-					        	$("button[value="+$scope.val+"]").addClass("button-purple");
-					        	break;
-					        case 1:
-					        	$scope.val = $scope.numbers[x];
-					        	$("button[value="+$scope.val+"]").addClass("button-red");
-					        	break;
-					        case 2:
-					        	$scope.val = $scope.numbers[x];
-					        	$("button[value="+$scope.val+"]").addClass("button-yellow");
-					        	break;
-					        case 3:
-					        	$scope.val = $scope.numbers[x];
-					        	$("button[value="+$scope.val+"]").addClass("button-blue");
-					        	break;
-					        case 4:
-					        	$scope.val = $scope.numbers[x];
-					        	$("button[value="+$scope.val+"]").addClass("button-orange");
-					        	break;
-					        case 5:
-					        	$scope.val = $scope.numbers[x];
-					        	$("button[value="+$scope.val+"]").addClass("button-green");
-					        	break;
-					        case 6:
-					        	$scope.val = $scope.numbers[x];
-					        	$("button[value="+$scope.val+"]").addClass("button-black");
-					        	break;
-					        }
-						}
-			        });
-			}
-			
-			$scope.paintBallsById = function($newBall,$marker){
-				 $(document).ready(function(){
+					 $scope.trueCount = $scope.counter-1;
 					 if($newBall!=0){
 				        switch($newBall % 7){
 					        case 0:
-					        	$("button[id="+$marker+$scope.counter+"]").addClass("button-purple");
+					        	$("button[id="+$marker+$id+"]").addClass("button-purple");
 					        	break;
 					        case 1:
-					        	$("button[id="+$marker+$scope.counter+"]").addClass("button-red");
+					        	$("button[id="+$marker+$id+"]").addClass("button-red");
 					        	break;
 					        case 2:
-					        	$("button[id="+$marker+$scope.counter+"]").addClass("button-yellow");
+					        	$("button[id="+$marker+$id+"]").addClass("button-yellow");
 					        	break;
 					        case 3:
-					        	$("button[id="+$marker+$scope.counter+"]").addClass("button-blue");
+					        	$("button[id="+$marker+$id+"]").addClass("button-blue");
 					        	break;
 					        case 4:
-					        	$("button[id="+$marker+$scope.counter+"]").addClass("button-orange");
+					        	$("button[id="+$marker+$id+"]").addClass("button-orange");
 					        	break;
 					        case 5:
-					        	$("button[id="+$marker+$scope.counter+"]").addClass("button-green");
+					        	$("button[id="+$marker+$id+"]").addClass("button-green");
 					        	break;
 					        case 6:
-					        	$("button[id="+$marker+$scope.counter+"]").addClass("button-black");
+					        	$("button[id="+$marker+$id+"]").addClass("button-black");
 					        	break;
 				        }
 					 }

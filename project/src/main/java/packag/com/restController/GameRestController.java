@@ -98,6 +98,7 @@ public class GameRestController {
 			}
 			break;
 		}
+		System.out.println(""+randomNumber);
 		randomNumbers[counter]=randomNumber;
 		for (int i = 0; i < combinationNumsArray.length; i++) {
 			if(combinationNumsArray[i]==randomNumber)
@@ -120,17 +121,6 @@ public class GameRestController {
 		return new ResponseEntity<>(randomNumber,HttpStatus.OK);
 		
 	}
-	
-//	private static <T> T getLastElement(final Iterable<T> elements) {
-//        final Iterator<T> itr = elements.iterator();
-//        T lastElement = itr.next();
-//
-//        while(itr.hasNext()) {
-//            lastElement=itr.next();
-//        }
-//
-//        return lastElement;
-//	}
 	
 	private int randomWithRange(int min, int max)
 	{

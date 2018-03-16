@@ -327,7 +327,7 @@
 			$scope.numbers=[];
 			$scope.array=[];
 			$scope.combinationArray=[];
-			$scope.counter=0;
+			$scope.counter=1;
 			$scope.newBall=0;
 			$scope.refreshIntervalId;
 			
@@ -350,7 +350,7 @@
 			}
 			
 			$(document).ready(function(){
-				$scope.refreshIntervalId = setInterval($scope.getBallsOn7sec,1500);
+				$scope.refreshIntervalId = setInterval($scope.getBallsOn7sec,500);
 				
 			});
 			

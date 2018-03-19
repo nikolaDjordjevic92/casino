@@ -7,6 +7,14 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <style>
 	
+	#big-button {
+		min-width: 400px;
+		min-height: 400px;
+		border-radius: 50%;
+		font-size: 100px;
+		border-width: 45px;
+	}
+	
 	.container {
 		max-width: 1600px;
 	}
@@ -36,6 +44,7 @@
 	}
 	#pickers {
 		min-height: 483px;
+		text-align: center;
 	}
 	
 	FORM{
@@ -182,14 +191,11 @@
 					</div>
 				</div>
 				<div  id="pickers" class="col-lg-12">
-					<div class="row">
-						<div  class="col-lg-6">
-						
+						<div  class="col-lg-12">
+							<button id="big-button">
+								{{newBall}}
+							</button>
 						</div>
-						<div  class="col-lg-6">
-						
-						</div>
-					</div>
 				</div>
 				<div  id="drawers" class="col-lg-12">
 					<div class="row">
@@ -312,6 +318,10 @@
 				
 			</div>
 			<div id="my-numbers" class="col-lg-2">
+				<div class="col-lg-12">
+					<h2>Welcome, {{userObject.name}}</h2>
+					<h3><i>Credit: {{userObject.credit}}</i></h3>
+				</div>
 				<h3>My numbers:</h3>
 				<div class="col-lg-12">
 					<button id="myBalls{{x}}" value="{{x}}" ng-repeat="x in combinationArray">
@@ -337,7 +347,8 @@
 					$("#ball"+$scope.counter).append($scope.newBall);
 					$scope.paintBallsById($scope.newBall,"ball",$scope.counter);
 					$scope.counter++;
-
+					$scope.paintBallsById($scope.newBall,"big-button",null);
+					
 					for(var j=0;j<$scope.combinationArray.length;j++){
 						if($scope.combinationArray[j]==$scope.newBall){
 							$scope.paintBallsById($scope.newBall,"myBalls",$scope.newBall);
@@ -368,29 +379,57 @@
 				 $(document).ready(function(){
 					 $scope.trueCount = $scope.counter-1;
 					 if($newBall!=0){
-				        switch($newBall % 7){
-					        case 0:
-					        	$("button[id="+$marker+$id+"]").addClass("button-purple");
-					        	break;
-					        case 1:
-					        	$("button[id="+$marker+$id+"]").addClass("button-red");
-					        	break;
-					        case 2:
-					        	$("button[id="+$marker+$id+"]").addClass("button-yellow");
-					        	break;
-					        case 3:
-					        	$("button[id="+$marker+$id+"]").addClass("button-blue");
-					        	break;
-					        case 4:
-					        	$("button[id="+$marker+$id+"]").addClass("button-orange");
-					        	break;
-					        case 5:
-					        	$("button[id="+$marker+$id+"]").addClass("button-green");
-					        	break;
-					        case 6:
-					        	$("button[id="+$marker+$id+"]").addClass("button-black");
-					        	break;
-				        }
+						if($id!==null){
+							 switch($newBall % 7){
+						        case 0:
+						        	$("button[id="+$marker+$id+"]").addClass("button-purple");
+						        	break;
+						        case 1:
+						        	$("button[id="+$marker+$id+"]").addClass("button-red");
+						        	break;
+						        case 2:
+						        	$("button[id="+$marker+$id+"]").addClass("button-yellow");
+						        	break;
+						        case 3:
+						        	$("button[id="+$marker+$id+"]").addClass("button-blue");
+						        	break;
+						        case 4:
+						        	$("button[id="+$marker+$id+"]").addClass("button-orange");
+						        	break;
+						        case 5:
+						        	$("button[id="+$marker+$id+"]").addClass("button-green");
+						        	break;
+						        case 6:
+						        	$("button[id="+$marker+$id+"]").addClass("button-black");
+						        	break;
+					        }
+						}
+						else{
+							$("button[id="+$marker+"]").removeClass();
+							switch($newBall % 7){
+						        case 0:
+						        	$("button[id="+$marker+"]").addClass("button-purple");
+						        	break;
+						        case 1:
+						        	$("button[id="+$marker+"]").addClass("button-red");
+						        	break;
+						        case 2:
+						        	$("button[id="+$marker+"]").addClass("button-yellow");
+						        	break;
+						        case 3:
+						        	$("button[id="+$marker+"]").addClass("button-blue");
+						        	break;
+						        case 4:
+						        	$("button[id="+$marker+"]").addClass("button-orange");
+						        	break;
+						        case 5:
+						        	$("button[id="+$marker+"]").addClass("button-green");
+						        	break;
+						        case 6:
+						        	$("button[id="+$marker+"]").addClass("button-black");
+						        	break;
+					        }
+						}
 					 }
 			        });
 			}
@@ -403,6 +442,11 @@
 			    }
 			    return input;
 			};
+			 $(document).ready(function(){
+				$http.get("/getUser/1").then(function(response){
+					$scope.userObject=response.data;
+				})
+			 });
 			
 		});
 		

@@ -47,10 +47,11 @@ public class GameRestController {
 	@PostMapping(value="/game-ready",produces = "application/json",consumes="application/json")
 	public ResponseEntity<Void> getStart(@RequestBody Combination combination) {
 		if(combination.getNumbers().length()!=0) {
-			User user = new User();
-			user.setId(1);
-			combination.setUser(user);
+			User userFromFront = new User();
+			userFromFront.setId(1);
+			combination.setUser(userFromFront);
 			gameService.saveCombination(combination);
+			
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		else
@@ -62,6 +63,9 @@ public class GameRestController {
 		Combination combination= gameService.getCombination(1);
 		if(combination==null)
 			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+		Optional<User> user = userService.getUser(1);
+		user.get().setCredit(user.get().getCredit()-combination.getBet());
+		userService.updateUser(user.get());
 		bet = combination.getBet();
 		combinationNums=combination.getNumbers();
 		String array = combination.getNumbers();
@@ -98,7 +102,6 @@ public class GameRestController {
 			}
 			break;
 		}
-		System.out.println(""+randomNumber);
 		randomNumbers[counter]=randomNumber;
 		for (int i = 0; i < combinationNumsArray.length; i++) {
 			if(combinationNumsArray[i]==randomNumber)
@@ -130,94 +133,94 @@ public class GameRestController {
 	
 	private int switcher(int counter,int multiplier) {
 		switch (counter) {
-			case 6:
+			case 5:
 				multiplier=10000;
 				break;
-			case 7:
+			case 6:
 				multiplier=7500;
 				break;
-			case 8:
+			case 7:
 				multiplier=5000;
 				break;
-			case 9:
+			case 8:
 				multiplier=2500;
 				break;
-			case 10:
+			case 9:
 				multiplier=1000;
 				break;
-			case 11:
+			case 10:
 				multiplier=500;
 				break;
-			case 12:
+			case 11:
 				multiplier=300;
 				break;
-			case 13:
+			case 12:
 				multiplier=200;
 				break;
-			case 14:
+			case 13:
 				multiplier=150;
 				break;
-			case 15:
+			case 14:
 				multiplier=100;
 				break;
-			case 16:
+			case 15:
 				multiplier=90;
 				break;
-			case 17:
+			case 16:
 				multiplier=80;
 				break;
-			case 18:
+			case 17:
 				multiplier=70;
 				break;
-			case 19:
+			case 18:
 				multiplier=60;
 				break;
-			case 20:
+			case 19:
 				multiplier=50;
 				break;
-			case 21:
+			case 20:
 				multiplier=40;
 				break;
-			case 22:
+			case 21:
 				multiplier=30;
 				break;
-			case 23:
+			case 22:
 				multiplier=25;
 				break;
-			case 24:
+			case 23:
 				multiplier=20;
 				break;
-			case 25:
+			case 24:
 				multiplier=15;
 				break;
-			case 26:
+			case 25:
 				multiplier=10;
 				break;
-			case 27:
+			case 26:
 				multiplier=9;
 				break;
-			case 28:
+			case 27:
 				multiplier=8;
 				break;
-			case 29:
+			case 28:
 				multiplier=7;
 				break;
-			case 30:
+			case 39:
 				multiplier=6;
 				break;
-			case 31:
+			case 30:
 				multiplier=5;
 				break;
-			case 32:
+			case 31:
 				multiplier=4;
 				break;
-			case 33:
+			case 32:
 				multiplier=3;
 				break;
-			case 34:
+			case 33:
 				multiplier=2;
 				break;
-			case 35:
+			case 34:
 				multiplier=1;
 				break;
 				

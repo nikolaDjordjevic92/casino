@@ -17,4 +17,15 @@ public class HomeController {
 		mav.addObject("name","Nikola");
 		return mav;
 	}
+	
+	@RequestMapping("/header")
+	public ModelAndView pozzitj() {
+		Message message = new Message("cao,kako je");
+		ModelAndView mav = new ModelAndView("views/fragments/header");
+		mav.addObject("message", message);
+		mav.addObject("name","Nikola");
+		return mav;
+	}
+	
+	
 }

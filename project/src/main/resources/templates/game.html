@@ -3,8 +3,8 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>		
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
 	
 	#bet-amount,
@@ -51,11 +51,11 @@
 		border-color: purple;
 	}
 	button,button:focus {
-		font-size: 20px;
+		font-size: 20px !important;
 		min-height: 70px;
 		min-width: 70px;
 		border-radius: 50px;
-		margin: 15px 45px;
+		margin: 15px 45px !important;
 		outline: 0px;
 		border-width: 13px;
 		background-color: white;
@@ -77,7 +77,8 @@
 <title>Game</title>
 </head>
 <body ng-app="myApp" ng-controller="myCtrl">
-	<div class="container">
+	<div th:replace="views/fragments/header">&nbsp;</div>
+	<div class="container" >
 		<h1>New game</h1>
 		<div class="row">
 			<button class="myBtn"   ng-click="pushNumber(n)" ng-repeat="n in numbers" value="{{n}}"  ng-show="n<8">
